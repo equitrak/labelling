@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.grid-container {
+display: grid;
+grid-width: auto;
+grid-gap: auto;
+grid-template-columns: 60% auto auto auto auto;
+background-color: none;
+padding: 10px;
+}
+.grid-item {
+background-color: none;
+border: none;
+padding: 20px;
+font-size: 30px;
+text-align: left;
+}
+
+video, input {
+display: block;
+width: 100%;
+height: auto;
+}
+
+
+
+.info {
+background-color: aqua;            
+}
+
+.error {
+background-color: red;
+color: white;
+}
+
+</style>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+</head>
+<body>
+
+<div style="width:1500px">
+
+
+<h1>Video Labelling Application</h1>
+
+<!-- <p>A Grid Layout must have a parent element with the <em>display</em> property set to <em>grid</em> or <em>inline-grid</em>.</p> -->
+
+<!-- <p>Direct child element(s) of the grid container automatically becomes grid items.</p> -->
+
+<div style="width:1000px;float:left;font-size:15px;font-weight:bold">
+	<label for="myfile">Select your video file:</label>
+	<div id="message"></div>
+	<input type="file" id="fileInput" accept="video/*"/>
+	<video id="video" controls autoplay></video>
+	<div id="buttonbar">
+	<button style="font-size:24px" id="restart" onclick="restart();">&#x23f9;</button> 
+	<button style="font-size:24px" id="rew" onclick="skip(-1)">&#x23ea;</button>
+	<button style="font-size:24px" id="play" onclick="vidplay()">&#x23EF;</button>
+	<button style="font-size:24px" id="fastFwd" onclick="skip(1)">&#x23e9;</button>
+	</div> 
+</div>
+
+<br>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity1">Ears:</label><br>
+	<select name="actValue" id="activity1">
+	<option value="ears">Ears</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start1">Start:</label> 
+	<input type='text' id='start1' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end1">End:</label>
+	<input type='text' id='end1' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add1">Add to CSV:</label>
+	<br>
+	<button id='add1' style="width:85px;font-size:15px;font-weight:bold">Add </button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity2">Head:</label>
+	<select name="actValue" id="activity2">
+	<option value="head">Head</option>
+	<option value="lips">Lips</option>
+	<option value="minimalactivity">Min. activity</option>
+	<option value="rotation">Long. Rot.</option>
+	<option value="quickRotation">Quick Long. Rot.</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start2">Start:</label> 
+	<input type='text' id='start2' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end2">End:</label>
+	<input type='text' id='end2' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add2">Add to CSV:</label>
+	<br>
+	<button id='add2' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity3">Neck:</label>
+	<select name="actValue" id="activity3">
+	<option value="neck">Neck</option>
+	<option value="210-270deg">210-270deg</option>
+	<option value="120-180deg">120-180deg</option>
+	<option value="rotation">Long. Rot.</option>
+	<option value="150-270deg">150-270deg</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start3">Start:</label> 
+	<input type='text' id='start3' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end3">End:</label>
+	<input type='text' id='end3' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add3">Add to CSV:</label>
+	<br>
+	<button id='add3' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity4">Body:</label>
+	<select name="actValue" id="activity4">
+	<option value="body">Body</option>
+	<option value="minTorso">Minor Torso</option>
+	<option value="hindQuart">Comp.Hind Quart.</option>
+	<option value="torsoContract">Ext.Cont. Torso</option>
+	<option value="longRot">Long. Rot.</option>
+	<option value="quickRotation">Quick Long. Rot.</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start4">Start:</label> 
+	<input type='text' id='start4' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end4">End:</label>
+	<input type='text' id='end4' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add4">Add to CSV:</label>
+	<br>
+	<button id='add4' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity5">LeftLeg-F:</label>
+	<select name="actValue" id="activity5">
+	<option value="LeftLeg-F">LeftLeg-F</option>
+	<option value="LocoAct">Loco. Act.</option>
+	<option value="abductMov">Abduct. Mov.</option>
+	<option value="abductAdduct">Abduct. Adduct.</option>
+	<option value="Paired-rightLegH">Paired-rightLegH</option>
+	<option value="finalFootfall">Final Footfall</option>
+	<option value="thirdFootfall">Third Footfall</option>
+	<option value="longRot">Long. Rot.</option>
+	<option value="quickLongRot">Quick Long. Rot.</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start5">Start:</label> 
+	<input type='text' id='start5' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end5">End:</label>
+	<input type='text' id='end5' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add5">Add to CSV:</label>
+	<br>
+	<button id='add5' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity6">LeftLeg-H:</label>
+	<select name="actValue" id="activity6">
+	<option value="LeftLeg-H">LeftLeg-H</option>
+	<option value="LocoAct">Loco. Act.</option>
+	<option value="abductMov">Abduct. Mov.</option>
+	<option value="abductAdduct">Abduct. Adduct.</option>
+	<option value="Paired-rightLegF">Paired-rightLegF</option>
+	<option value="finalFootfall">Final Footfall</option>
+	<option value="thirdFootfall">Third Footfall</option>
+	<option value="longRot">Long. Rot.</option>
+	<option value="quickLongRot">Quick Long. Rot.</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start6">Start:</label> 
+	<input type='text' id='start6' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end6">End:</label>
+	<input type='text' id='end6' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add6">Add to CSV:</label>
+	<br>
+	<button id='add6' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity7">RightLeg-F:</label>
+	<select name="actValue" id="activity7">
+	<option value="RightLeg-F">RightLeg-F</option>
+	<option value="LocoAct">Loco. Act.</option>
+	<option value="abductMov">Abduct. Mov.</option>
+	<option value="abductAdduct">Abduct. Adduct.</option>
+	<option value="Paired-leftLegH">Paired-leftLegH</option>
+	<option value="finalFootfall">Final Footfall</option>
+	<option value="thirdFootfall">Third Footfall</option>
+	<option value="longRot">Long. Rot.</option>
+	<option value="quickLongRot">Quick Long. Rot.</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start7">Start:</label> 
+	<input type='text' id='start7' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end7">End:</label>
+	<input type='text' id='end7' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add7">Add to CSV:</label>
+	<br>
+	<button id='add7' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity8">RightLeg-H:</label>
+	<select name="actValue" id="activity8">
+	<option value="RightLeg-H">RightLeg-H</option>
+	<option value="LocoAct">Loco. Act.</option>
+	<option value="abductMov">Abduct. Mov.</option>
+	<option value="abductAdduct">Abduct. Adduct.</option>
+	<option value="Paired-leftLegF">Paired-leftLegF</option>
+	<option value="finalFootfall">Final Footfall</option>
+	<option value="thirdFootfall">Third Footfall</option>
+	<option value="longRot">Long. Rot.</option>
+	<option value="quickLongRot">Quick Long. Rot.</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start8">Start:</label> 
+	<input type='text' id='start8' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end8">End:</label>
+	<input type='text' id='end8' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add8">Add to CSV:</label>
+	<br>
+	<button id='add8' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity9">Tail:</label><br>
+	<select name="actValue" id="activity9">
+	<option value="tail">Tail</option>
+	<option value="raised">Raised</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start9">Start:</label> 
+	<input type='text' id='start9' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end9">End:</label>
+	<input type='text' id='end9' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add9">Add to CSV:</label>
+	<br>
+	<button id='add9' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="activity10">Vocalisation:</label>
+	<select name="actValue" id="activity10">
+	<option value="Vocalisation">Vocalisation</option>
+	</select>
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start10">Start:</label> 
+	<input type='text' id='start10' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end10">End:</label>
+	<input type='text' id='end10' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add10">Add to CSV:</label>
+	<br>
+	<button id='add10' style="width:85px;font-size:15px;font-weight:bold">Add</button>
+</div>
+
+
+<br>
+<br>
+
+<div style="float:left;width:40%;margin:1%;font-size:15px;font-weight:bold">
+<table id='table'>
+<tr>
+<th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Start </th>
+<th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">End </th>
+<th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Movement </th>
+<th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Activity </th>
+<th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">File Name </th>
+</tr>
+</table>
+
+<br>
+<br>
+
+</div>  
+<div style="float:right;width:200px;margin:10px">
+<button id="btnExportToCsv" type="button" class="button" style="width:200px;margin:10px;font-size:15px;font-weight:bold">Download CSV File</button>
+</div>
+
+</div>
+
+<script>
+(function localFileVideoPlayer() {
+'use strict'
+var URL = window.URL || window.webkitURL
+var displayMessage = function (message, isError) {
+var element = document.querySelector('#message')
+//    element.innerHTML = message
+//    element.className = isError ? 'error' : 'info'
+}
+var playSelectedFile = function (event) {
+var file = this.files[0]
+var type = file.type
+var videoNode = document.querySelector('video')
+var canPlay = videoNode.canPlayType(type)
+if (canPlay === '') canPlay = 'no'
+var message = 'Can play type "' + type + '": ' + canPlay
+var isError = canPlay === 'no'
+displayMessage(message, isError)
+
+if (isError) {
+  return
+}
+
+var fileURL = URL.createObjectURL(file)
+videoNode.src = fileURL
+}
+var inputNode = document.querySelector('input')
+inputNode.addEventListener('change', playSelectedFile, false)
+
+})()
+
+
+
+$(function(){
+
+var movement1 = "Ears";
+var movement2 = "Head";
+var movement3 = "Neck";
+var movement4 = "Body";
+var movement5 = "LeftLeg-F";
+var movement6 = "LeftLeg-H";
+var movement7 = "RightLeg-F";
+var movement8 = "RightLeg-H";
+var movement9 = "Tail";
+var movement10 = "Vocalisation";
+
+$('#add1').on('click',function(){
+  var start=$('#start1').val();
+  var end=$('#end1').val();
+  var movement=movement1;
+  var activity=$('#activity1').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add2').on('click',function(){
+  var start=$('#start2').val();
+  var end=$('#end2').val();
+  var movement=movement2;
+  var activity=$('#activity2').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add3').on('click',function(){
+  var start=$('#start3').val();
+  var end=$('#end3').val();
+  var movement=movement3;
+  var activity=$('#activity3').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add4').on('click',function(){
+  var start=$('#start4').val();
+  var end=$('#end4').val();
+  var movement=movement4;
+  var activity=$('#activity4').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add5').on('click',function(){
+  var start=$('#start5').val();
+  var end=$('#end5').val();
+  var movement=movement5;
+  var activity=$('#activity5').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add6').on('click',function(){
+  var start=$('#start6').val();
+  var end=$('#end6').val();
+  var movement=movement6;
+  var activity=$('#activity6').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add7').on('click',function(){
+  var start=$('#start7').val();
+  var end=$('#end7').val();
+  var movement=movement7;
+  var activity=$('#activity7').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add8').on('click',function(){
+  var start=$('#start8').val();
+  var end=$('#end8').val();
+  var movement=movement8;
+  var activity=$('#activity8').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add9').on('click',function(){
+  var start=$('#start9').val();
+  var end=$('#end9').val();
+  var movement=movement9;
+  var activity=$('#activity9').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+$('#add10').on('click',function(){
+  var start=$('#start10').val();
+  var end=$('#end10').val();
+  var movement=movement10;
+  var activity=$('#activity10').val();
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
+});
+
+</script>
+
+
+
+<script>
+
+function vidplay() {
+   var video = document.getElementById("video");
+   var button = document.getElementById("play");
+   if (video.paused) {
+	  video.play();
+	  button.textContent = "\u23F8";
+   } else {
+	  video.pause();
+	  button.textContent = "\u23EF";
+   }
+}
+
+function restart() {
+	var video = document.getElementById("video");
+	video.currentTime = 0;
+}
+
+function skip(value) {
+	var video = document.getElementById("video");
+	video.currentTime += value;
+}      
+</script>
+
+
+<script>
+class TableCSVExporter {
+constructor (table, includeHeaders = true) {
+	this.table = table;
+	this.rows = Array.from(table.querySelectorAll("tr"));
+
+	if (!includeHeaders && this.rows[0].querySelectorAll("th").length) {
+		this.rows.shift();
+	}
+}
+
+convertToCSV () {
+	const lines = [];
+	const numCols = this._findLongestRowLength();
+
+	for (const row of this.rows) {
+		let line = "";
+
+		for (let i = 0; i < numCols; i++) {
+			if (row.children[i] !== undefined) {
+				line += TableCSVExporter.parseCell(row.children[i]);
+			}
+
+			line += (i !== (numCols - 1)) ? "," : "";
+		}
+
+		lines.push(line);
+	}
+
+	return lines.join("\n");
+}
+
+_findLongestRowLength () {
+	return this.rows.reduce((l, row) => row.childElementCount > l ? row.childElementCount : l, 0);
+}
+
+static parseCell (tableCell) {
+	let parsedValue = tableCell.textContent;
+
+	// Replace all double quotes with two double quotes
+	parsedValue = parsedValue.replace(/"/g, `""`);
+
+	// If value contains comma, new-line or double-quote, enclose in double quotes
+	parsedValue = /[",\n]/.test(parsedValue) ? `"${parsedValue}"` : parsedValue;
+
+	return parsedValue;
+}
+}
+
+</script>
+
+
+<script>
+	const dataTable = document.getElementById("table");
+	const btnExportToCsv = document.getElementById("btnExportToCsv");
+
+	btnExportToCsv.addEventListener("click", () => {
+		const exporter = new TableCSVExporter(dataTable);
+		const csvOutput = exporter.convertToCSV();
+		const csvBlob = new Blob([csvOutput], { type: "text/csv" });
+		const blobUrl = URL.createObjectURL(csvBlob);
+		const anchorElement = document.createElement("a");
+
+		anchorElement.href = blobUrl;
+		anchorElement.download = "table-export.csv";
+		anchorElement.click();
+
+		setTimeout(() => {
+			URL.revokeObjectURL(blobUrl);
+		}, 500);
+	});
+	
+</script>
+
+</body>
+</html>
