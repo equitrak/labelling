@@ -55,19 +55,53 @@ color: white;
 
 <!-- <p>Direct child element(s) of the grid container automatically becomes grid items.</p> -->
 
+
 <div style="width:1000px;float:left;font-size:15px;font-weight:bold">
 	<label for="myfile">Select your video file:</label>
 	<div id="message"></div>
 	<input type="file" id="fileInput" accept="video/*"/>
 	<video id="video" controls autoplay></video>
+	<p>Playback Position: <span id="demo"></span></p>
 	<div id="buttonbar">
 	<button style="font-size:24px" id="restart" onclick="restart();">&#x23f9;</button> 
 	<button style="font-size:24px" id="rew" onclick="skip(-1)">&#x23ea;</button>
 	<button style="font-size:24px" id="play" onclick="vidplay()">&#x23EF;</button>
 	<button style="font-size:24px" id="fastFwd" onclick="skip(1)">&#x23e9;</button>
+	<button id="videoBtn1" style="font-weight:bold;">Slow</button>
+	<button id="videoBtn2" style="font-weight:bold;">Norm</button>
+
 	</div> 
 </div>
 
+
+
+<br>
+
+
+<div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="behavior">Behavior:</label> 
+	<input type='text' id='behavior' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="start0">Start:</label> 
+	<input type='text' id='start0' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="end0">End:</label>
+	<input type='text' id='end0' style="width: 75px;">
+</div>
+
+<div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
+	<label for="add0">Add to CSV:</label>
+	<br>
+	<button id='add0' style="width:85px;font-size:15px;font-weight:bold">Add </button>
+</div>
+
+<br>
+<br>
+<br>
 <br>
 
 <div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
@@ -346,7 +380,6 @@ color: white;
 	<button id='add10' style="width:85px;font-size:15px;font-weight:bold">Add</button>
 </div>
 
-
 <br>
 <br>
 
@@ -355,6 +388,7 @@ color: white;
 <tr>
 <th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Start </th>
 <th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">End </th>
+<th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Behavior </th>
 <th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Movement </th>
 <th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Activity </th>
 <th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">File Name </th>
@@ -417,9 +451,30 @@ var movement8 = "RightLeg-H";
 var movement9 = "Tail";
 var movement10 = "Vocalisation";
 
+
+$('#add0').on('click',function(){
+  var start=$('#start0').val();
+  var end=$('#end0').val();
+  var behavior=$('#behavior').val();
+  var movement="mov";
+  var activity="act";
+  
+  var file=document.getElementById('fileInput');
+  var fileName= file.value.substring(12);
+  
+  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+  $('#table').append(data);
+});
+
 $('#add1').on('click',function(){
   var start=$('#start1').val();
   var end=$('#end1').val();
+  var behavior=$('#behavior').val();
   var movement=movement1;
   var activity=$('#activity1').val();
   
@@ -428,6 +483,7 @@ $('#add1').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -437,6 +493,7 @@ $('#add1').on('click',function(){
 $('#add2').on('click',function(){
   var start=$('#start2').val();
   var end=$('#end2').val();
+  var behavior=$('#behavior').val();
   var movement=movement2;
   var activity=$('#activity2').val();
   
@@ -445,6 +502,7 @@ $('#add2').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -454,6 +512,7 @@ $('#add2').on('click',function(){
 $('#add3').on('click',function(){
   var start=$('#start3').val();
   var end=$('#end3').val();
+  var behavior=$('#behavior').val();
   var movement=movement3;
   var activity=$('#activity3').val();
   
@@ -462,6 +521,7 @@ $('#add3').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -471,6 +531,7 @@ $('#add3').on('click',function(){
 $('#add4').on('click',function(){
   var start=$('#start4').val();
   var end=$('#end4').val();
+  var behavior=$('#behavior').val();
   var movement=movement4;
   var activity=$('#activity4').val();
   
@@ -479,6 +540,7 @@ $('#add4').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -488,6 +550,7 @@ $('#add4').on('click',function(){
 $('#add5').on('click',function(){
   var start=$('#start5').val();
   var end=$('#end5').val();
+  var behavior=$('#behavior').val();
   var movement=movement5;
   var activity=$('#activity5').val();
   
@@ -496,6 +559,7 @@ $('#add5').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -505,6 +569,7 @@ $('#add5').on('click',function(){
 $('#add6').on('click',function(){
   var start=$('#start6').val();
   var end=$('#end6').val();
+  var behavior=$('#behavior').val();
   var movement=movement6;
   var activity=$('#activity6').val();
   
@@ -513,6 +578,7 @@ $('#add6').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -522,6 +588,7 @@ $('#add6').on('click',function(){
 $('#add7').on('click',function(){
   var start=$('#start7').val();
   var end=$('#end7').val();
+  var behavior=$('#behavior').val();
   var movement=movement7;
   var activity=$('#activity7').val();
   
@@ -530,6 +597,7 @@ $('#add7').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -539,6 +607,7 @@ $('#add7').on('click',function(){
 $('#add8').on('click',function(){
   var start=$('#start8').val();
   var end=$('#end8').val();
+  var behavior=$('#behavior').val();
   var movement=movement8;
   var activity=$('#activity8').val();
   
@@ -547,6 +616,7 @@ $('#add8').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -556,6 +626,7 @@ $('#add8').on('click',function(){
 $('#add9').on('click',function(){
   var start=$('#start9').val();
   var end=$('#end9').val();
+  var behavior=$('#behavior').val();
   var movement=movement9;
   var activity=$('#activity9').val();
   
@@ -564,6 +635,7 @@ $('#add9').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -573,6 +645,7 @@ $('#add9').on('click',function(){
 $('#add10').on('click',function(){
   var start=$('#start10').val();
   var end=$('#end10').val();
+  var behavior=$('#behavior').val();
   var movement=movement10;
   var activity=$('#activity10').val();
   
@@ -581,6 +654,7 @@ $('#add10').on('click',function(){
   
   var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
+				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
@@ -615,7 +689,22 @@ function restart() {
 function skip(value) {
 	var video = document.getElementById("video");
 	video.currentTime += value;
-}      
+}  
+
+
+video.ontimeupdate = function() {myFunction()};
+
+function myFunction() {
+    document.getElementById("demo").innerHTML = Math.round(video.currentTime*1000)/1000;
+}
+
+document.getElementById("videoBtn1").addEventListener("click", function(){ 
+    document.getElementById("video").playbackRate = .1;
+}); 
+	
+document.getElementById("videoBtn2").addEventListener("click", function(){ 
+    document.getElementById("video").playbackRate = 1;
+});    
 </script>
 
 
