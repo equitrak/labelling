@@ -108,6 +108,11 @@ color: white;
 	<label for="activity1">Ears:</label><br>
 	<select name="actValue" id="activity1">
 	<option value="ears">Ears</option>
+	<option value="Fwd">Fwd</option>
+	<option value="Bwd">Bwd</option>
+	<option value="Neutral">Neutral</option>
+	<option value="L-Fwd R-Bwd">L-Fwd R-Bwd</option>
+	<option value="R-Fwd L-Bwd">R-Fwd L-Bwd</option>
 	</select>
 </div>
 
@@ -132,9 +137,14 @@ color: white;
 	<select name="actValue" id="activity2">
 	<option value="head">Head</option>
 	<option value="lips">Lips</option>
-	<option value="minimalactivity">Min. activity</option>
-	<option value="rotation">Long. Rot.</option>
-	<option value="quickRotation">Quick Long. Rot.</option>
+	<option value="Mouth">Mouth</option>
+	<option value="Tongue">Tongue</option>
+	<option value="Lateral-L">Lateral-L</option>
+	<option value="Lateral-R">Lateral-R</option>
+	<option value="RotClk">RotClk</option>
+	<option value="RotAntClk">RotAntClk</option>
+	<option value="Dorsal">Dorsal</option>
+	<option value="Ventral">Ventral</option>
 	</select>
 </div>
 
@@ -158,11 +168,16 @@ color: white;
 	<label for="activity3">Neck:</label>
 	<select name="actValue" id="activity3">
 	<option value="neck">Neck</option>
-	<option value="210-270deg">210-270deg</option>
-	<option value="120-180deg">120-180deg</option>
-	<option value="rotation">Long. Rot.</option>
-	<option value="150-270deg">150-270deg</option>
-	</select>
+	<option value="Positive">Positive</option>
+	<option value="Neutral">Neutral</option>
+	<option value="Negative">Negative</option>
+	<option value="Lateral-L">Lateral-L</option>
+	<option value="Lateral-R">Lateral-R</option>
+	<option value="RotClk">RotClk</option>
+	<option value="RotAntClk">RotAntClk</option>
+	<option value="Dorsal">Dorsal</option>
+	<option value="Ventral">Ventral</option>
+		</select>
 </div>
 
 <div style="width:85px;float:left;margin:10px;font-size:15px;font-weight:bold">
@@ -182,14 +197,18 @@ color: white;
 </div>
 
 <div style="width:120px;float:left;margin:10px;font-size:15px;font-weight:bold">
-	<label for="activity4">Body:</label>
+	<label for="activity4">Trunk:</label>
 	<select name="actValue" id="activity4">
-	<option value="body">Body</option>
-	<option value="minTorso">Minor Torso</option>
-	<option value="hindQuart">Comp.Hind Quart.</option>
-	<option value="torsoContract">Ext.Cont. Torso</option>
-	<option value="longRot">Long. Rot.</option>
-	<option value="quickRotation">Quick Long. Rot.</option>
+	<option value="trunk">Trunk</option>
+	<option value="FlexDors">FlexDors</option>
+	<option value="ExtensDors">ExtensDors</option>
+	<option value="FlexTrans">FlexTrans</option>
+	<option value="ExensTrans">ExensTrans</option>
+	<option value="FlexSag">FlexSag</option>
+	<option value="ExensSag">ExensSag</option>
+	<option value="RotTrans">RotTrans</option>
+	<option value="RotLong">RotLong</option>
+	<option value="RotVert">RotVert</option>
 	</select>
 </div>
 
@@ -213,14 +232,11 @@ color: white;
 	<label for="activity5">LeftLeg-F:</label>
 	<select name="actValue" id="activity5">
 	<option value="LeftLeg-F">LeftLeg-F</option>
-	<option value="LocoAct">Loco. Act.</option>
-	<option value="abductMov">Abduct. Mov.</option>
-	<option value="abductAdduct">Abduct. Adduct.</option>
-	<option value="Paired-rightLegH">Paired-rightLegH</option>
-	<option value="finalFootfall">Final Footfall</option>
-	<option value="thirdFootfall">Third Footfall</option>
-	<option value="longRot">Long. Rot.</option>
-	<option value="quickLongRot">Quick Long. Rot.</option>
+	<option value="Protract">Protract</option>
+	<option value="Retract">Retract</option>
+	<option value="Abduct">Abduct</option>
+	<option value="Adduct">Adduct</option>
+	<option value="NonLoco">NonLoco</option>
 	</select>
 </div>
 
@@ -244,14 +260,11 @@ color: white;
 	<label for="activity6">LeftLeg-H:</label>
 	<select name="actValue" id="activity6">
 	<option value="LeftLeg-H">LeftLeg-H</option>
-	<option value="LocoAct">Loco. Act.</option>
-	<option value="abductMov">Abduct. Mov.</option>
-	<option value="abductAdduct">Abduct. Adduct.</option>
-	<option value="Paired-rightLegF">Paired-rightLegF</option>
-	<option value="finalFootfall">Final Footfall</option>
-	<option value="thirdFootfall">Third Footfall</option>
-	<option value="longRot">Long. Rot.</option>
-	<option value="quickLongRot">Quick Long. Rot.</option>
+	<option value="Protract">Protract</option>
+	<option value="Retract">Retract</option>
+	<option value="Abduct">Abduct</option>
+	<option value="Adduct">Adduct</option>
+	<option value="NonLoco">NonLoco</option>
 	</select>
 </div>
 
@@ -275,14 +288,11 @@ color: white;
 	<label for="activity7">RightLeg-F:</label>
 	<select name="actValue" id="activity7">
 	<option value="RightLeg-F">RightLeg-F</option>
-	<option value="LocoAct">Loco. Act.</option>
-	<option value="abductMov">Abduct. Mov.</option>
-	<option value="abductAdduct">Abduct. Adduct.</option>
-	<option value="Paired-leftLegH">Paired-leftLegH</option>
-	<option value="finalFootfall">Final Footfall</option>
-	<option value="thirdFootfall">Third Footfall</option>
-	<option value="longRot">Long. Rot.</option>
-	<option value="quickLongRot">Quick Long. Rot.</option>
+	<option value="Protract">Protract</option>
+	<option value="Retract">Retract</option>
+	<option value="Abduct">Abduct</option>
+	<option value="Adduct">Adduct</option>
+	<option value="NonLoco">NonLoco</option>
 	</select>
 </div>
 
@@ -306,14 +316,11 @@ color: white;
 	<label for="activity8">RightLeg-H:</label>
 	<select name="actValue" id="activity8">
 	<option value="RightLeg-H">RightLeg-H</option>
-	<option value="LocoAct">Loco. Act.</option>
-	<option value="abductMov">Abduct. Mov.</option>
-	<option value="abductAdduct">Abduct. Adduct.</option>
-	<option value="Paired-leftLegF">Paired-leftLegF</option>
-	<option value="finalFootfall">Final Footfall</option>
-	<option value="thirdFootfall">Third Footfall</option>
-	<option value="longRot">Long. Rot.</option>
-	<option value="quickLongRot">Quick Long. Rot.</option>
+	<option value="Protract">Protract</option>
+	<option value="Retract">Retract</option>
+	<option value="Abduct">Abduct</option>
+	<option value="Adduct">Adduct</option>
+	<option value="NonLoco">NonLoco</option>
 	</select>
 </div>
 
@@ -337,7 +344,14 @@ color: white;
 	<label for="activity9">Tail:</label><br>
 	<select name="actValue" id="activity9">
 	<option value="tail">Tail</option>
+	<option value="VHSwish">VHSwish</option>
+	<option value="MLSwish">MLSwish</option>
+	<option value="ClkSwish">ClkSwish</option>
+	<option value="AntClkSwish">AntClkSwish</option>
+	<option value="Calmped">Calmped</option>
 	<option value="raised">Raised</option>
+	<option value="Held-L">Held-L</option>
+	<option value="Held-R">Held-R</option>
 	</select>
 </div>
 
@@ -361,6 +375,9 @@ color: white;
 	<label for="activity10">Vocalisation:</label>
 	<select name="actValue" id="activity10">
 	<option value="Vocalisation">Vocalisation</option>
+	<option value="Present">Present</option>
+	<option value="Absent">Absent</option>
+
 	</select>
 </div>
 
@@ -443,7 +460,7 @@ $(function(){
 var movement1 = "Ears";
 var movement2 = "Head";
 var movement3 = "Neck";
-var movement4 = "Body";
+var movement4 = "Trunk";
 var movement5 = "LeftLeg-F";
 var movement6 = "LeftLeg-H";
 var movement7 = "RightLeg-F";
