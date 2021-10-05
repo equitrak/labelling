@@ -35,6 +35,9 @@ background-color: red;
 color: white;
 }
 
+ol.c {list-style-type: decimal;}
+
+
 </style>
 
 
@@ -111,8 +114,9 @@ color: white;
 	<option value="Fwd">Fwd</option>
 	<option value="Bwd">Bwd</option>
 	<option value="Neutral">Neutral</option>
-	<option value="L-Fwd R-Bwd">L-Fwd R-Bwd</option>
-	<option value="R-Fwd L-Bwd">R-Fwd L-Bwd</option>
+	<option value="LF, RB">LF, RB</option>
+	<option value="RF, LB">RF, LB</option>
+	<option value="Active">Active</option>
 	</select>
 </div>
 
@@ -143,8 +147,11 @@ color: white;
 	<option value="Lateral-R">Lateral-R</option>
 	<option value="RotClk">RotClk</option>
 	<option value="RotAntClk">RotAntClk</option>
+	<option value="ML Shake">ML Shake</option>	
 	<option value="Dorsal">Dorsal</option>
 	<option value="Ventral">Ventral</option>
+	<option value="DV Shake">DV Shake</option>
+	
 	</select>
 </div>
 
@@ -200,15 +207,11 @@ color: white;
 	<label for="activity4">Trunk:</label>
 	<select name="actValue" id="activity4">
 	<option value="trunk">Trunk</option>
-	<option value="FlexDors">FlexDors</option>
-	<option value="ExtensDors">ExtensDors</option>
-	<option value="FlexTrans">FlexTrans</option>
-	<option value="ExensTrans">ExensTrans</option>
-	<option value="FlexSag">FlexSag</option>
-	<option value="ExensSag">ExensSag</option>
-	<option value="RotTrans">RotTrans</option>
-	<option value="RotLong">RotLong</option>
-	<option value="RotVert">RotVert</option>
+	<option value="DorsFlex">DorsFlex</option>
+	<option value="DorsExt">DorsExt</option>
+	<option value="FlexL">FlexL</option>
+	<option value="FlexR">FlexR</option>
+	<option value="RotLA">RotLA</option>
 	</select>
 </div>
 
@@ -236,7 +239,7 @@ color: white;
 	<option value="Retract">Retract</option>
 	<option value="Abduct">Abduct</option>
 	<option value="Adduct">Adduct</option>
-	<option value="NonLoco">NonLoco</option>
+	<option value="NLM">NLM</option>
 	</select>
 </div>
 
@@ -264,7 +267,7 @@ color: white;
 	<option value="Retract">Retract</option>
 	<option value="Abduct">Abduct</option>
 	<option value="Adduct">Adduct</option>
-	<option value="NonLoco">NonLoco</option>
+	<option value="NLM">NLM</option>
 	</select>
 </div>
 
@@ -292,7 +295,7 @@ color: white;
 	<option value="Retract">Retract</option>
 	<option value="Abduct">Abduct</option>
 	<option value="Adduct">Adduct</option>
-	<option value="NonLoco">NonLoco</option>
+	<option value="NLM">NLM</option>
 	</select>
 </div>
 
@@ -320,7 +323,7 @@ color: white;
 	<option value="Retract">Retract</option>
 	<option value="Abduct">Abduct</option>
 	<option value="Adduct">Adduct</option>
-	<option value="NonLoco">NonLoco</option>
+	<option value="NLM">NLM</option>
 	</select>
 </div>
 
@@ -344,10 +347,10 @@ color: white;
 	<label for="activity9">Tail:</label><br>
 	<select name="actValue" id="activity9">
 	<option value="tail">Tail</option>
-	<option value="VHSwish">VHSwish</option>
+	<option value="VertSwish">VertSwish</option>
 	<option value="MLSwish">MLSwish</option>
-	<option value="ClkSwish">ClkSwish</option>
-	<option value="AntClkSwish">AntClkSwish</option>
+	<option value="RotClk">RotClk</option>
+	<option value="RotAntClk">RotAntClk</option>
 	<option value="Calmped">Calmped</option>
 	<option value="raised">Raised</option>
 	<option value="Held-L">Held-L</option>
@@ -403,6 +406,7 @@ color: white;
 <div style="float:left;width:40%;margin:1%;font-size:15px;font-weight:bold">
 <table id='table'>
 <tr>
+<th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Id </th>
 <th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Start </th>
 <th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">End </th>
 <th style="padding:0 15px 0 15px;font-size:15px;font-weight:bold">Behavior </th>
@@ -467,9 +471,12 @@ var movement7 = "RightLeg-F";
 var movement8 = "RightLeg-H";
 var movement9 = "Tail";
 var movement10 = "Vocalisation";
-
+var i = 0;
 
 $('#add0').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start0').val();
   var end=$('#end0').val();
   var behavior=$('#behavior').val();
@@ -479,16 +486,22 @@ $('#add0').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add1').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start1').val();
   var end=$('#end1').val();
   var behavior=$('#behavior').val();
@@ -498,16 +511,22 @@ $('#add1').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add2').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start2').val();
   var end=$('#end2').val();
   var behavior=$('#behavior').val();
@@ -517,16 +536,22 @@ $('#add2').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add3').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;  
   var start=$('#start3').val();
   var end=$('#end3').val();
   var behavior=$('#behavior').val();
@@ -536,16 +561,22 @@ $('#add3').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add4').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start4').val();
   var end=$('#end4').val();
   var behavior=$('#behavior').val();
@@ -555,16 +586,22 @@ $('#add4').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add5').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start5').val();
   var end=$('#end5').val();
   var behavior=$('#behavior').val();
@@ -574,16 +611,22 @@ $('#add5').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add6').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start6').val();
   var end=$('#end6').val();
   var behavior=$('#behavior').val();
@@ -593,16 +636,22 @@ $('#add6').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add7').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start7').val();
   var end=$('#end7').val();
   var behavior=$('#behavior').val();
@@ -612,16 +661,22 @@ $('#add7').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add8').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start8').val();
   var end=$('#end8').val();
   var behavior=$('#behavior').val();
@@ -631,16 +686,22 @@ $('#add8').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add9').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start9').val();
   var end=$('#end9').val();
   var behavior=$('#behavior').val();
@@ -650,16 +711,22 @@ $('#add9').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
 $('#add10').on('click',function(){
+  var table = document.getElementsByTagName('table')[0];
+  rows = table.getElementsByTagName('tr');
+  var j=i++;
   var start=$('#start10').val();
   var end=$('#end10').val();
   var behavior=$('#behavior').val();
@@ -669,12 +736,15 @@ $('#add10').on('click',function(){
   var file=document.getElementById('fileInput');
   var fileName= file.value.substring(12);
   
-  var data=`<tr><td>`+start+`</td style="padding:0 15px 0 15px;">`+
+  var data=`<tr>
+				  <td style="padding:0 15px 0 15px;">`+rows[j].rowIndex+`</td>`+  
+				  `<td style="padding:0 15px 0 15px;">`+start+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+end+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+behavior+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+movement+`</td>`+
 				  `<td style="padding:0 15px 0 15px;">`+activity+`</td>`+
-				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td></tr>`;
+				  `<td style="padding:0 15px 0 15px;">`+fileName+`</td>
+				  </tr>`;
   $('#table').append(data);
 });
 
